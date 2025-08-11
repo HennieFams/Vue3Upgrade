@@ -1,0 +1,6 @@
+npm install --save powerbi-client
+npm i vue-router-tab
+npm install @syncfusion/ej2-vue-grids 
+npm install @syncfusion/ej2-vue-navigations
+npm install @amcharts/amcharts4
+npm install @syncfusion/ej2-material-theme
