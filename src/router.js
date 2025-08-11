@@ -1,55 +1,50 @@
-/*=========================================================================================
-  File Name: router.js
-  Description: Routes for vue-router. Lazy loading is enabled.
-  Object Strucutre:
-                    path => router path
-                    name => router name
-                    component(lazy loading) => component to load
-                    meta : {
-                      rule => which user can have access (ACL)
-                      breadcrumb => Add breadcrumb to specific page
-                      pageTitle => Display title besides breadcrumb
-                    }
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
+import { createRouter, createWebHistory } from 'vue-router'
 
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  scrollBehavior() {
+    return { x: 0, y: 0 }
+  },
+  routes: [
+    {
+      path: '',
+      component: () => import('./layouts/main/SimpleLayout.vue'),
+      children: [
+        {
+          path: '/',
+          name: 'home',
+          component: { template: '<div>Home</div>' }
+        }
+      ]
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/'
+    }
+  ]
+})
 
-import Vue from 'vue'
-import Router from 'vue-router'
-
-
+export default router
+/*
+import { createRouter, createWebHistory } from 'vue-router'
 import auth from "@/auth/authService";
 
-
-
-
-Vue.use(Router)
-
-const router = new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
   scrollBehavior() {
     return { x: 0, y: 0 }
   },
   routes: [
     {
       // =============================================================================
-      // MAIN LAYOUT ROUTES  component: () => import('./layouts/main/Main.vue'),
+      // MAIN LAYOUT ROUTES
       // =============================================================================
       path: '',
       component: () => import('./layouts/main/Main.vue'),
-
       children: [
         // =============================================================================
         // Theme Routes
         // =============================================================================
-        //
-        //xxxxx
-
-
         {
           path: '/',
           redirect: '/dashboard/analytics'
@@ -71,9 +66,6 @@ const router = new Router({
             rule: 'admin'
           }
         },
-
-
-
         // =============================================================================
         // Application Routes
         // =============================================================================
@@ -165,15 +157,6 @@ const router = new Router({
             rule: 'admin'
           }
         },
-        /*
-          Below route is for demo purpose
-          You can use this route in your app
-            {
-                path: '/apps/eCommerce/item/',
-                name: 'ecommerce-item-detail-view',
-                redirect: '/apps/eCommerce/shop',
-            }
-        */
         {
           path: '/apps/eCommerce/item/',
           redirect: '/apps/eCommerce/item/5546604',
@@ -259,7 +242,6 @@ const router = new Router({
             rule: 'fams24Basic'
           },
         },
-
         {
           path: '/QuickChartView',
           name: 'Charts',
@@ -320,7 +302,6 @@ const router = new Router({
             rule: 'everybody'
           },
         },
-
         {
           path: '/Store',
           name: 'Store',
@@ -331,7 +312,6 @@ const router = new Router({
             rule: 'admin'
           },
         },
-
         {
           path: '/Tank',
           name: 'Tank',
@@ -442,7 +422,6 @@ const router = new Router({
             rule: 'editor'
           },
         },
-
         {
           path: '/FilterGPSInformation',
           name: 'FilterGPSInformation',
@@ -453,7 +432,6 @@ const router = new Router({
             rule: 'editor'
           },
         },
-
         {
           path: '/DataImports',
           name: 'Data Imports',
@@ -494,26 +472,6 @@ const router = new Router({
             rule: 'admin'
           },
         },
-        // {
-        //   path: '/ReportsList',
-        //   name: 'ReportsList',
-        //   component: () => import('./views/ui-elements/FAMSUI/ReportsListBold.vue'),
-        //   meta: {
-        //     title: 'Reports',
-        //     pageTitle: 'Reports List page',
-        //     rule: 'user'
-        //   },
-        // },
-        // {
-        //   path: '/SystemReportsList',
-        //   name: 'SystemReportsList',
-        //   component: () => import('./views/ui-elements/FAMSUI/SystemReportsListBold.vue'),
-        //   meta: {
-        //     title: 'System Reports',
-        //     pageTitle: 'System Reports List page',
-        //     rule: 'user'
-        //   },
-        // },
         {
           path: '/StandardReportListBold',
           name: 'StandardReportListBold',
@@ -534,7 +492,6 @@ const router = new Router({
             rule: 'allFamsUserM'
           },
         },
-
         {
           path: '/Allocation',
           name: 'Allocation',
@@ -695,7 +652,6 @@ const router = new Router({
             rule: 'ThebigBoss'
           },
         },
-
         {
           path: '/Account',
           name: 'Account',
@@ -706,19 +662,16 @@ const router = new Router({
             rule: 'ThebigBoss'
           },
         },
-
         {
           path: '/StoreVPN',
           name: 'StoreVPN',
           component: () => import('./views/ui-elements/FAMSUI/StoreVPN.vue'),
-          meta: {
+          meta:. {
             title: 'StoreVPN Setup',
             pageTitle: 'FAMS Store StoreVPN Setup / Configuration',
             rule: 'ThebigBoss'
           },
         },
-
-
         {
           path: '/User',
           name: 'User',
@@ -970,16 +923,6 @@ const router = new Router({
             rule: 'famsManager'
           },
         },
-        // {
-        //   path: '/ViewIntegration',
-        //   name: 'ViewIntegration',
-        //   component: () => import('./views/ui-elements/FAMSUI/ViewIntegration.vue'),
-        //   meta: {
-        //     title:'View Integration',
-        //     pageTitle: 'View Integration',
-        //     rule: 'admin'
-        //   },
-        // },
         {
           path: '/andrescratch',
           name: 'andrescratch',
@@ -989,8 +932,6 @@ const router = new Router({
             rule: 'admin'
           },
         },
-
-
         {
           path: '/AccountSelect',
           name: 'AccountSelect',
@@ -1010,7 +951,6 @@ const router = new Router({
             rule: 'admin'
           },
         },
-
         {
           path: '/products',
           name: 'productlist',
@@ -1020,7 +960,6 @@ const router = new Router({
             rule: 'admin'
           },
         },
-
         {
           path: '/Documentlist',
           name: 'Documentlist',
@@ -1057,7 +996,6 @@ const router = new Router({
             rule: 'admin'
           },
         },
-
         {
           path: '/customers',
           name: 'customerlist',
@@ -1085,7 +1023,6 @@ const router = new Router({
             rule: 'admin'
           },
         },
-
         {
           path: '/quotation',
           name: 'quotationlayout',
@@ -1113,7 +1050,6 @@ const router = new Router({
             pageTitle: 'Dispensing/Transfers page',
             rule: 'allFamsUser'
           },
-
         },
         {
           path: '/ui-elements/data-list/list-view',
@@ -1267,7 +1203,6 @@ const router = new Router({
             rule: 'admin'
           },
         },
-
         {
           path: '/ui-elements/ag-grid-table',
           name: 'ag-grid-table',
@@ -1281,7 +1216,6 @@ const router = new Router({
             rule: 'admin'
           },
         },
-
         // =============================================================================
         // COMPONENT ROUTES
         // =============================================================================
@@ -1593,8 +1527,6 @@ const router = new Router({
             rule: 'admin'
           },
         },
-
-
         // =============================================================================
         // FORMS
         // =============================================================================
@@ -1756,7 +1688,6 @@ const router = new Router({
             rule: 'admin'
           },
         },
-
         // =============================================================================
         // Pages Routes
         // =============================================================================
@@ -1875,7 +1806,6 @@ const router = new Router({
             rule: 'admin'
           },
         },
-
         // =============================================================================
         // CHARTS & MAPS
         // =============================================================================
@@ -1921,9 +1851,6 @@ const router = new Router({
             rule: 'admin'
           },
         },
-
-
-
         // =============================================================================
         // EXTENSIONS
         // =============================================================================
@@ -2154,7 +2081,7 @@ const router = new Router({
             rule: 'admin'
           },
         },
-        ],
+      ],
     },
     // =============================================================================
     // FULL PAGE LAYOUTS
@@ -2165,7 +2092,6 @@ const router = new Router({
       component: () => import('./views/ui-elements/FAMSUI/selectaccount.vue'),
       meta: {
         pageTitle: 'FAMS Account selection',
-        //rule: ['admin', 'editor','user','basic','TheBoss','ThebigBoss','userM','basicM','userL']
         rule: 'everybody'
       },
     },
@@ -2175,7 +2101,6 @@ const router = new Router({
       component: () => import('./layouts/full-page/FullPageDashboard.vue'),
       meta: {
         pageTitle: 'FAMS Full PageDashboard',
-        //rule: ['admin', 'editor','user','basic','TheBoss','ThebigBoss','userM','basicM','userL']
         rule: 'allFamsUserL'
       },
     },
@@ -2278,19 +2203,16 @@ const router = new Router({
     },
     // Redirect to 404 page, if no match found
     {
-      path: '*',
+      path: '/:pathMatch(.*)*',
       redirect: '/pages/error-404'
     }
   ],
-
 })
-
 router.onError(error => {
   if (/loading chunk \d* failed./i.test(error.message)) {
     window.location.reload()
   }
 })
-
 router.afterEach(() => {
   // Remove initial loading
   const appLoading = document.getElementById('loading-bg')
@@ -2298,70 +2220,22 @@ router.afterEach(() => {
     appLoading.style.display = "none";
   }
 })
-
-// router.beforeEach((to, from, next) => {
-//   firebase.auth().onAuthStateChanged(() => {
-
-//     const firebaseCurrentUser = firebase.auth().currentUser
-
-//     if (
-//         to.path === "/pages/login" ||
-//         to.path === "/pages/forgot-password" ||
-//         to.path === "/pages/error-404" ||
-//         to.path === "/pages/error-500" ||
-//         to.path === "/pages/register" ||
-//         to.path === "/callback" ||
-//         to.path === "/pages/comingsoon" ||
-//         (auth.isAuthenticated() || firebaseCurrentUser)
-//     ) {
-//         return next();
-//     }
-
-//     // If auth required, check login. If login fails redirect to login page
-//     if (to.meta.authRequired) {
-//       if (!(auth.isAuthenticated() || firebaseCurrentUser)) {
-//         router.push({ path: '/pages/login', query: { to: to.path } })
-//       }
-//     }
-
-//     return next()
-//     // Specify the current path as the customState parameter, meaning it
-//     // will be returned to the application after auth
-//     // auth.login({ target: to.path });
-
-//   });
-
-// });
-
 router.beforeEach((to, from, next) => {
-    // get firebase current user
-
-    if (
-      to.path === "/pages/login" ||
-      to.path === "/pages/forgot-password" ||
-      to.path === "/pages/error-404" ||
-      to.path === "/pages/error-500" ||
-      to.path === "/pages/register" ||
-      to.path === "/callback" ||
-      to.path === "/pages/comingsoon" ||
-      to.path === "/dashboard/Test" ||
-      (sessionStorage.accessToken)
-    ) {
-      // if(to.path === "/pages/login") return next();
-      // else if( (localStorage.getItem('accountKey') == '') || (localStorage.getItem('accountKey').length < 5 ))
-      // {
-      //   router.push({ path: '/pages/login', query: { to: to.path } })
-      //   return next();
-      // }
-
-      return next();
-    }
-    router.push({ path: '/pages/login', query: { to: to.path } });
-
+  if (
+    to.path === "/pages/login" ||
+    to.path === "/pages/forgot-password" ||
+    to.path === "/pages/error-404" ||
+    to.path === "/pages/error-500" ||
+    to.path === "/pages/register" ||
+    to.path === "/callback" ||
+    to.path === "/pages/comingsoon" ||
+    to.path === "/dashboard/Test" ||
+    (sessionStorage.accessToken)
+  ) {
     return next();
-
-
-
+  }
+  router.push({ path: '/pages/login', query: { to: to.path } });
+  return next();
 });
-
 export default router
+*/
